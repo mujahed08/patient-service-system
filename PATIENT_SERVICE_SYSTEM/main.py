@@ -6,6 +6,7 @@ import pprint
 from datetime import datetime
 from typing import List
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
 from PATIENT_SERVICE_SYSTEM.commons.logger import get_logger
 from PATIENT_SERVICE_SYSTEM.pydantic_models.enviornment import Settings
@@ -17,6 +18,16 @@ settings = Settings(_env_file=f'{run_env}.env', _env_file_encoding='utf-8')
 
 logger.info('   Initiliazing Fast API app')
 app = FastAPI(title="FastAPI")
+origins = [
+    "http://localhost:8030",
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins='*',
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def get_patient_db() -> AsyncIOMotorDatabase:
     client = AsyncIOMotorClient('mongodb://root:example@localhost:27017')
