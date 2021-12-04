@@ -1,12 +1,13 @@
 """
 FastAPI
 """
-from fastapi import APIRouter
-from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
+from datetime import datetime
 from typing import List
 import pprint
-from datetime import datetime
-from PATIENT_SERVICE_SYSTEM.microservices.MEDICINE_SERVICE_SYSTEM.pydantic_models.models import Medicine, MedicinePg
+from fastapi import APIRouter
+from motor.motor_asyncio import AsyncIOMotorDatabase
+from PATIENT_SERVICE_SYSTEM.microservices.\
+    MEDICINE_SERVICE_SYSTEM.pydantic_models.models import Medicine, MedicinePg
 from PATIENT_SERVICE_SYSTEM.commons.mongodb_connector import get_mongodb
 
 def get_medicine_db() -> AsyncIOMotorDatabase:

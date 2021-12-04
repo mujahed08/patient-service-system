@@ -1,10 +1,8 @@
-from fastapi import APIRouter
-from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
 import pprint
 from datetime import datetime
 from typing import List
-from PATIENT_SERVICE_SYSTEM.commons.logger import get_logger
-from PATIENT_SERVICE_SYSTEM.pydantic_models.enviornment import Settings
+from fastapi import APIRouter
+from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
 from PATIENT_SERVICE_SYSTEM.pydantic_models.models import Patient, PatientPg
 
 def get_patient_db() -> AsyncIOMotorDatabase:
@@ -65,7 +63,7 @@ async def get_patient(patient_id: int):
     patient_db = get_patient_db()
 
     document = await patient_db.patients.find_one( {'id' : patient_id})
-    patient = Patient(name=document.get('name'), app_id=document.get('app_id'), 
+    patient = Patient(name=document.get('name'), app_id=document.get('app_id'),
         patient_no=str(document.get('id')))
     patient.object_id = str(document.get('_id'))
     patient.id = document.get('id')
@@ -92,7 +90,7 @@ async def update_patient(patient_id: int, updates: dict):
 
 
     document = await patient_db.patients.find_one( {'id' : patient_id})
-    patient = Patient(name=document.get('name'), app_id=document.get('app_id'), 
+    patient = Patient(name=document.get('name'), app_id=document.get('app_id'),
         patient_no=str(document.get('id')))
     patient.object_id = str(document.get('_id'))
     patient.id = document.get('id')

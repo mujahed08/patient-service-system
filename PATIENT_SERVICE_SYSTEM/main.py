@@ -7,7 +7,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from PATIENT_SERVICE_SYSTEM.commons.logger import get_logger
 from PATIENT_SERVICE_SYSTEM.pydantic_models.enviornment import Settings
 from .routers.patient import app as patient_router
-from PATIENT_SERVICE_SYSTEM.microservices.MEDICINE_SERVICE_SYSTEM.routers.medicine import app as medicine_router
+from .microservices.MEDICINE_SERVICE_SYSTEM.routers.medicine import app as medicine_router
+from .microservices.CATCH.routers.issue import app as issue_router
 
 logger = get_logger('main.py')
 run_env:str = os.environ['RUN_ENV']
@@ -17,6 +18,7 @@ logger.info('   Initiliazing Fast API app')
 app = FastAPI(title="FastAPI")
 app.include_router(patient_router)
 app.include_router(medicine_router)
+app.include_router(issue_router)
 origins = [
     "http://localhost:8030",
 ]
