@@ -6,16 +6,16 @@ from typing import List
 import pprint
 from fastapi import APIRouter
 from motor.motor_asyncio import AsyncIOMotorDatabase
-from PATIENT_SERVICE_SYSTEM.microservices.\
-    MEDICINE_SERVICE_SYSTEM.pydantic_models.models import Medicine, MedicinePg
-from PATIENT_SERVICE_SYSTEM.commons.mongodb_connector import get_mongodb
+from pydrapp.microservices.\
+    medicine.pylidate.models import Medicine, MedicinePg
+from pydrapp.commons.mongodb_connector import get_mongodb
 
 def get_medicine_db() -> AsyncIOMotorDatabase:
     return get_mongodb()
 
 app = APIRouter()
 
-@app.post("/medicine-service-system/medicines", response_model=Medicine)
+@app.post("/medicine-service-system/medicine", response_model=Medicine)
 async def create_medicine(medicine: Medicine):
     medicine_db = get_medicine_db()
 
@@ -34,7 +34,7 @@ async def create_medicine(medicine: Medicine):
     medicine.object_id = str(result.inserted_id)
     return medicine
 
-@app.get("/medicine-service-system/medicines", response_model=MedicinePg)
+@app.get("/medicine-service-system/medicine", response_model=MedicinePg)
 async def get_medicines(page_number: int = 1, limit: int = 10):
     medicine_db = get_medicine_db()
     total = await medicine_db.medicines.count_documents({})
@@ -53,13 +53,14 @@ async def get_medicines(page_number: int = 1, limit: int = 10):
 
     return MedicinePg(page=page_number, total=total, data=data)
 
-@app.get("/medicine-service-system/medicines/{medicine_id}", response_model=Medicine)
+@app.get("/medicine-service-system/medicine/{medicine_id}", response_model=Medicine)
 async def get_medicine(medicine_id: int):
     medicine_db = get_medicine_db()
 
     document = await medicine_db.medicines.find_one( {'id' : medicine_id})
+    pprint.pprint(document.get('strength'))
     medicine = Medicine(name=document.get('name'), generic=document.get('generic'),
-        strength=document.get('strength'))
+        strength=['250 mg'])
     medicine.object_id = str(document.get('_id'))
     medicine.id = document.get('id')
     medicine.type = document.get('type')
@@ -67,7 +68,7 @@ async def get_medicine(medicine_id: int):
     medicine.updatedOn = document.get('updatedOn')
     return medicine
 
-@app.put("/medicine-service-system/medicines/{medicine_id}", response_model=Medicine)
+@app.put("/medicine-service-system/medicine/{medicine_id}", response_model=Medicine)
 async def update_medicine(medicine_id: int, updates: dict):
     medicine_db = get_medicine_db()
 
@@ -87,7 +88,7 @@ async def update_medicine(medicine_id: int, updates: dict):
     medicine.updatedOn = document.get('updatedOn')
     return medicine
 
-@app.delete("/medicine-service-system/medicines/{medicine_id}", response_model=dict)
+@app.delete("/medicine-service-system/medicine/{medicine_id}", response_model=dict)
 async def del_medicine(medicine_id: int):
     medicine_db = get_medicine_db()
 

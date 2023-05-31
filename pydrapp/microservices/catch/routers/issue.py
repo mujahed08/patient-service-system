@@ -3,9 +3,9 @@ from datetime import datetime
 from typing import List
 from fastapi import APIRouter
 from motor.motor_asyncio import AsyncIOMotorDatabase
-from PATIENT_SERVICE_SYSTEM.microservices.\
-    CATCH.pydantic_models.models import Issue, IssuePg
-from PATIENT_SERVICE_SYSTEM.commons.mongodb_connector import get_mongodb
+from pydrapp.microservices.\
+    catch.pylidate.models import Issue, IssuePg
+from pydrapp.commons.mongodb_connector import get_mongodb
 
 def get_catch_db() -> AsyncIOMotorDatabase:
     return get_mongodb()

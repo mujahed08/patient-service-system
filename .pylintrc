@@ -144,6 +144,9 @@ disable=print-statement,
         deprecated-sys-function,
         exception-escape,
         comprehension-escape,
+        useless-option-value,
+        pointless-string-statement,
+        unknown-option-value
         C0114,
         C0115,
         C0116

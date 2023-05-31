@@ -7,9 +7,9 @@ from datetime import datetime
 from fastapi import FastAPI
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
 from typing import List
-from MEDICINE_SERVICE_SYSTEM.commons.logger import get_logger
-from MEDICINE_SERVICE_SYSTEM.pydantic_models.enviornment import Settings
-from MEDICINE_SERVICE_SYSTEM.pydantic_models.models import Medicine, MedicinePg
+from medicine.commons.logger import get_logger
+from medicine.pylidate.enviornment import Settings
+from medicine.pylidate.models import Medicine, MedicinePg
 
 logger = get_logger('main.py')
 run_env:str = os.environ['RUN_ENV']

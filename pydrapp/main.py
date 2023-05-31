@@ -4,14 +4,14 @@ FastAPI
 import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from PATIENT_SERVICE_SYSTEM.commons.logger import get_logger
-from PATIENT_SERVICE_SYSTEM.pydantic_models.enviornment import Settings
+from pydrapp.commons.logger import get_logger
+from pydrapp.pylidate.enviornment import Settings
 from .routers.patient import app as patient_router
-from .microservices.MEDICINE_SERVICE_SYSTEM.routers.medicine import app as medicine_router
-from .microservices.CATCH.routers.issue import app as issue_router
+from .microservices.medicine.routers.medicine import app as medicine_router
+from .microservices.catch.routers.issue import app as issue_router
 
 logger = get_logger('main.py')
-run_env:str = os.environ['RUN_ENV']
+run_env:str = 'dev' #os.environ['RUN_ENV']
 settings = Settings(_env_file=f'{run_env}.env', _env_file_encoding='utf-8')
 
 logger.info('   Initiliazing Fast API app')
