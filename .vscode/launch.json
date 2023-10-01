@@ -13,7 +13,7 @@
                 "RUN_ENV": "dev"
             },
             "args": [
-                "PATIENT_SERVICE_SYSTEM.main:app",
+                "pydrapp.main:app",
                 "--port",
                 "8030"
             ],

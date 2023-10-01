@@ -1,5 +1,4 @@
 import pprint
-import time
 from datetime import datetime
 from typing import List
 from fastapi import APIRouter
@@ -36,7 +35,6 @@ async def create_patient(patient: Patient):
 @app.get("/patient-service-system/patients", response_model=PatientPg)
 async def get_patients(page_number: int = 1, limit: int = 10):
     patient_db = get_patient_db()
-    time.sleep(3)
     total = await patient_db.patients.count_documents({})
     cursor = patient_db.patients.find().skip((( page_number - 1 ) * limit )
         if page_number > 0 else 0 ).limit( limit )
